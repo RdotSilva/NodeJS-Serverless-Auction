@@ -1,3 +1,5 @@
+import { v4 as uuid } from "uuid";
+
 const createAuction = async (event, context) => {
   // Get the body data from the event
   const { title } = JSON.parse(event.body);
@@ -7,10 +9,12 @@ const createAuction = async (event, context) => {
 
   // Create new auction item
   const auction = {
+    id: uuid(),
     title,
     status: "OPEN",
     createdAt: now.toISOString(),
   };
+
   return {
     statusCode: 201,
     body: JSON.stringify(auction),
