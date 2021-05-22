@@ -25,3 +25,8 @@ functions:
       - http:
           method: POST
           path: /auction
+
+custom:
+  AuctionsTable:
+    name: !Ref AuctionsTable
+    arn: !GetAtt AuctionsTable.Arn
