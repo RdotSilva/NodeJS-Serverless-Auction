@@ -5,11 +5,8 @@ import createError from "http-errors";
 // Create new DynamoDB instance
 const dynamoDB = new AWS.DynamoDB.DocumentClient();
 
-const getAuction = async (event, context) => {
+export const getAuctionById = async (id) => {
   let auction;
-
-  // Get auction ID from path params
-  const { id } = event.pathParameters;
 
   try {
     const result = await dynamoDB
@@ -28,6 +25,15 @@ const getAuction = async (event, context) => {
   if (!auction) {
     throw new createError.NotFound(`Auction with ID ${id} not found!`);
   }
+
+  return auction;
+};
+
+const getAuction = async (event, context) => {
+  // Get auction ID from path params
+  const { id } = event.pathParameters;
+
+  const auction = await getAuctionById(id);
 
   return {
     statusCode: 200,
