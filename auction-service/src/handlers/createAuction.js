@@ -13,12 +13,17 @@ const createAuction = async (event, context) => {
   // Get current date
   const now = new Date();
 
+  // Set end date to 1 hour in the future
+  const endDate = newDate();
+  endDate.setHours(now.getHours() + 1);
+
   // Create new auction item
   const auction = {
     id: uuid(),
     title,
     status: "OPEN",
     createdAt: now.toISOString(),
+    endingAt: endDate.toISOString(),
     highestBid: {
       amount: 0,
     },
