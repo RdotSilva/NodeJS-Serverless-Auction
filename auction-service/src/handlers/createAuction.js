@@ -14,7 +14,7 @@ const createAuction = async (event, context) => {
   const now = new Date();
 
   // Set end date to 1 hour in the future
-  const endDate = newDate();
+  const endDate = new Date();
   endDate.setHours(now.getHours() + 1);
 
   // Create new auction item
