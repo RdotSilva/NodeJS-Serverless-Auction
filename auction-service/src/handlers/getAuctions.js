@@ -8,13 +8,25 @@ const dynamoDB = new AWS.DynamoDB.DocumentClient();
 const getAuctions = async (event, context) => {
   let auctions;
 
+  // Get status from params
+  const { status } = event.queryStringParameters;
+
+  // Use global secondary index to get all auctions filtered by status
+  const queryParams = {
+    TableName: process.env.AUCTIONS_TABLE_NAME,
+    IndexName: "statusAndEndDate",
+    KeyConditionExpression: "#status = :status",
+    ExpressionAttributeValues: {
+      ":status": status,
+    },
+    ExpressionAttributeNames: {
+      "#status": "status",
+    },
+  };
+
   try {
     // Query the database for all auctions
-    const result = await dynamoDB
-      .scan({
-        TableName: process.env.AUCTIONS_TABLE_NAME,
-      })
-      .promise();
+    const result = await dynamoDB.query(queryParams).promise();
 
     // Get the items of the database query
     auctions = result.Items;
