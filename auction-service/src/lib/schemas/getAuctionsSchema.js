@@ -1,5 +1,6 @@
 // JSON Auction schema validation
 const schema = {
+  type: "object",
   properties: {
     queryStringParameters: {
       type: "object",
@@ -13,7 +14,6 @@ const schema = {
     },
   },
   required: ["queryStringParameters"],
-  type: "strict",
 };
 
 export default schema;
