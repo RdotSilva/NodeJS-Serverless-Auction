@@ -1,4 +1,4 @@
-// JSON Auction schema validation
+// JSON Create Auction schema validation
 const schema = {
   type: "object",
   properties: {
@@ -9,8 +9,8 @@ const schema = {
           type: "string",
         },
       },
+      required: ["title"],
     },
-    required: ["title"],
   },
   required: ["body"],
 };
