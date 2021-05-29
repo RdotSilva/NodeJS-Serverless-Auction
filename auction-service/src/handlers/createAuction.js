@@ -12,6 +12,9 @@ const createAuction = async (event, context) => {
   // Get the body data from the event
   const { title } = event.body;
 
+  // Get user info from the authorizer context
+  const { email } = event.requestContext.authorizer;
+
   // Get current date
   const now = new Date();
 
@@ -29,6 +32,7 @@ const createAuction = async (event, context) => {
     highestBid: {
       amount: 0,
     },
+    seller: email,
   };
 
   // Insert auction into DB
