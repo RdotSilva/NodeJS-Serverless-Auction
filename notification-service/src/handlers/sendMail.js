@@ -1,5 +1,8 @@
 import AWS from "aws-sdk";
-import { notificationEmailSource } from "../../config";
+import {
+  notificationEmailSource,
+  notificationDestinationEmail,
+} from "../../config";
 
 const ses = new AWS.SES({ region: "us-east-1" });
 
@@ -20,6 +23,14 @@ const sendMail = async (event, context) => {
       },
     },
   };
+
+  try {
+    const result = await ses.sendEmail(params).promise();
+    console.log(result);
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 export const handler = sendMail;
