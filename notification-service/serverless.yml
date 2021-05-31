@@ -17,3 +17,8 @@ provider:
 functions:
   sendMail:
     handler: src/handlers/sendMail.handler
+
+custom:
+  mailQueue:
+    name: MailQueue-${self:provider.stage}
+    arn:
