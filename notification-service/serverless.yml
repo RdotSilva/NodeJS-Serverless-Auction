@@ -21,6 +21,10 @@ resources:
 functions:
   sendMail:
     handler: src/handlers/sendMail.handler
+    events:
+      - sqs:
+          arn: ${self:custom.mailQueue.arn}
+          batchSize: 1
 
 custom:
   mailQueue:
