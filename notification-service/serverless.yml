@@ -25,4 +25,4 @@ functions:
 custom:
   mailQueue:
     name: MailQueue-${self:provider.stage}
-    arn:
+    arn: !GetAtt MailQueue.Arn
