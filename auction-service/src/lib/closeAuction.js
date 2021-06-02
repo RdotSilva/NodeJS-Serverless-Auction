@@ -33,4 +33,18 @@ export const closeAuction = async (auction) => {
       }),
     })
     .promise();
+
+  // Notify a bidder that they have won an auction
+  const notifyBidder = sqs
+    .sendMessage({
+      QueueUrl: process.env.MAIL_QUEUE_URL,
+      MessageBody: JSON.stringify({
+        subject: "You have won an auction!",
+        recipient: bidder,
+        body: `Congrats! You have won "${title}" for $${amount}`,
+      }),
+    })
+    .promise();
+
+  return Promise.all([notifyBidder, notifySeller]);
 };
