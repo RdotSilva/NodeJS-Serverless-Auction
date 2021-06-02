@@ -22,6 +22,21 @@ export const closeAuction = async (auction) => {
   const { title, seller, highestBid } = auction;
   const { amount, bidder } = highestBid;
 
+  // Check if no bids were placed and notify seller to re-list item
+  if (amount == 0) {
+    await sqs
+      .sendMessage({
+        QueueUrl: process.env.MAIL_QUEUE_URL,
+        MessageBody: JSON.stringify({
+          subject: "No bids on your auction item",
+          recipient: seller,
+          body: `Sorry but there were no bids on "${title}", try listing the item at a lower price.`,
+        }),
+      })
+      .promise();
+    return;
+  }
+
   // Notify a seller that their auction has ended
   const notifySeller = sqs
     .sendMessage({
