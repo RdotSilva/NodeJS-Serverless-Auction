@@ -1,5 +1,7 @@
 import { uploadPictureToS3 } from "../lib/uploadPictureToS3";
 import { getAuctionById } from "./getAuction";
+import middy from "@middy/core";
+import httpErrorHandler from "@middy/http-error-handler";
 
 const uploadAuctionPicture = async (event) => {
   // Get the auction ID
@@ -21,4 +23,4 @@ const uploadAuctionPicture = async (event) => {
   };
 };
 
-export const handler = uploadAuctionPicture;
+export const handler = middy(uploadAuctionPicture).use(httpErrorHandler());
