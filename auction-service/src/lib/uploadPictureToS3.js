@@ -15,5 +15,5 @@ export const uploadPictureToS3 = async (key, body) => {
     })
     .promise();
 
-  return result;
+  return result.Location;
 };
