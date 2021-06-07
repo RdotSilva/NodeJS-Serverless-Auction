@@ -7,7 +7,7 @@ import { uploadPictureToS3 } from "../lib/uploadPictureToS3";
 import { getAuctionById } from "./getAuction";
 import uploadAuctionImageSchema from "../lib/schemas/uploadAuctionImage";
 
-const uploadAuctionPicture = async (event) => {
+const uploadAuctionImage = async (event) => {
   // Get the auction ID
   const { id } = event.pathParameters;
 
@@ -42,6 +42,6 @@ const uploadAuctionPicture = async (event) => {
   };
 };
 
-export const handler = middy(uploadAuctionPicture)
+export const handler = middy(uploadAuctionImage)
   .use(httpErrorHandler())
   .use(validator({ inputSchema: uploadAuctionImageSchema }));
