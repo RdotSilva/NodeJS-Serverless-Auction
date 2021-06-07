@@ -9,8 +9,15 @@ const uploadAuctionPicture = async (event) => {
   // Get the auction ID
   const { id } = event.pathParameters;
 
+  const { email } = event.requestContext.authorizer;
+
   // Find the auction
   const auction = await getAuctionById(id);
+
+  // Check to make sure use has proper authorization to upload image
+  if (auction.seller !== email) {
+    throw new createError.Forbidden(`You are not the seller of this auction`);
+  }
 
   // Create base64 image
   const base64 = event.body.replace(/^data:image\/\w+;base64,/, "");
